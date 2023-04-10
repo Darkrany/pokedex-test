@@ -1,6 +1,7 @@
+const pokedex = document.getElementById('pokedex'); /* recogemos los datos del html */
+const cantidadElementos = document.getElementById("cantidad");
+const apiURL = `https://pokeapi.co/api/v2/pokemon/`; 
 
-<<<<<<< Updated upstream
-=======
 const fetchPokemon = (limit, offset) => {
                     fetch(apiURL + '?limit=' + limit + '&offset=' + offset)
                     .then((res) => res.json())
@@ -17,30 +18,9 @@ const fetchPokemon = (limit, offset) => {
                      pokemonListDisplay(pkm);
                     }
                   )
->>>>>>> Stashed changes
 
-const fetchPokemon = () => {
-    
-    const api = `https://pokeapi.co/api/v2/pokemon/`; 
- 
-                    fetch(api).then((res) => res.json())
-                    .then((data) => {
-                        const pkm = data.results.map((pokemon) => ({
-                          id: pokemon.id,
-                          name: pokemon.name,
-                        }));
-                        console.log(pkm);
-                      })                 
-
- console.log(api)
-         
-    
-
-     
 };
 
-<<<<<<< Updated upstream
-=======
 const pokemonListDisplay = (pkm) => {
         const printPokelist = pkm.map(
           pokelist => 
@@ -62,8 +42,7 @@ cantidadElementos.addEventListener('change', () => {
   const offset = 0; 
   fetchPokemon(cantidad, offset);
 });
->>>>>>> Stashed changes
 
 
 
-fetchPokemon()
+fetchPokemon(cantidadElementos.value, 0)
