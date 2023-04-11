@@ -2,7 +2,7 @@
 /*card */
 
 :root {
-  --red: #DE1337;
+  --red: #285fb2;
   --black: #343434;
   --white: #fff;
 }
@@ -94,7 +94,7 @@ body {
   height: 20px;
 }
 
- @media (max-width: 993px) {
+ /* @media (max-width: 993px) {
   .card-container,
   .card-container:nth-child(5n)  {
     width: 160px;
@@ -110,4 +110,35 @@ body {
     width: 80%;
     margin-right: 0;
   } 
+} */
+
+
+
+
+
+
+
+.search-box {
+  width: 294px;
+  height: 35px;
+  
+    display: flex;
+    justify-content: center;
+  
 }
+
+/* .search-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+
+
+.search-box input {
+  flex: 1;
+  border: 0;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+} */
+
