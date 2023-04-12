@@ -2,16 +2,17 @@ const pokedex = document.getElementById('pokedex'); /* recogemos los datos del h
 const cantidadPkms = document.getElementById("cantidad");
 const searchPkm = document.getElementById('search-form');
 const apiURL = `https://pokeapi.co/api/v2/pokemon/`; 
-let totalPokemon;
+let pokemonRequest = []; //Almacenamos resultados del fetch
+ searchLimit = 0;
 
 const fetchPokemon = (limit, offset) => {
                     fetch(apiURL + '?limit=' + limit + '&offset=' + offset)
                     .then((res) => res.json())
                     .then((data) => { 
-                      totalPokemon = data.count;
-                      
-                        const pkm = data.results.map((pokemons) => {
-                          
+                         pokemonTotal = data.count;
+                         searchLimit = pokemonTotal; // Asignamos el valor de pokemonTotal a la variable searchLimit
+                         pokemonRequest = data.results.map((pokemons) => {
+                        
                            // Utilizamos split() para obtener el número del Pokemon de la URL que es el ID
                               const pkmID = pokemons.url.split('/')[6];
                               return {
@@ -21,11 +22,11 @@ const fetchPokemon = (limit, offset) => {
                               img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+pkmID+".png"
                             };
                           });
-                          pokemonListDisplay(pkm);
+                          pokemonListDisplay(pokemonRequest);
                         });
                     };
 
-                                                       
+                                               
 const pokemonListDisplay = (pkm) => {
         const printPokelist = pkm.map(
           pokelist =>  
@@ -54,26 +55,26 @@ cantidadPkms.addEventListener('change', () => {
 
 
 searchPkm.addEventListener('submit', (event) => {
-  event.preventDefault(); // Evita que se recargue la página al enviar
+  event.preventDefault();
   const searchInput = document.getElementById('search-input').value;
-  fetch(apiURL+`?limit=`+1500)
-  .then(res => res.json())
-  .then(data => {
-   
-    const filteredResults = data.results.filter(pokemon => 
-                            pokemon.name.startsWith(searchInput));
-    console.log(filteredResults)
-  })
-  .catch(error => console.error(error));
-  }
-);
+  fetch(apiURL + `?limit=${searchLimit}`)
+    .then(res => res.json())
+    .then(data => {
+      const filteredResults = data.results.filter(pokemon => 
+        pokemon.name.startsWith(searchInput)
+      ).map(pokemon => {
+        const pkmID = pokemon.url.split('/')[6];
+        return {
+          id: pkmID,
+          name: pokemon.name,
+          url: pokemon.url,
+          img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+pkmID+".png"
+        };
+      });
+      pokemonListDisplay(filteredResults);
+    })
+    .catch(error => console.error(error));
+});
 
-fetchPokemon(cantidadPkms.value, 0)
-// const searchInput = "cha";
-// fetch(`https://pokeapi.co/api/v2/pokemon?limit=1000`)
-//   .then(response => response.json())
-//   .then(data => {
-//     const filteredResults = data.results.filter(pokemon => pokemon.name.startsWith(searchInput));
-//     console.log(filteredResults);
-//   })
-//   .catch(error => console.error(error));
+
+fetchPokemon(cantidadPkms.value, 0);
