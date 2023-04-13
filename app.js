@@ -3,7 +3,11 @@ const cantidadPkms = document.getElementById("cantidad");
 const searchPkm = document.getElementById('search-form');
 const apiURL = `https://pokeapi.co/api/v2/pokemon/`; 
 let pokemonRequest = []; //Almacenamos resultados del fetch
- searchLimit = 0;
+let searchLimit = 0;
+let pkmsPerPages = cantidadPkms.value;
+let currentPage = 1;
+
+ // Petición a API para obtener lista Pokemons
 
 const fetchPokemon = (limit, offset) => {
                     fetch(apiURL + '?limit=' + limit + '&offset=' + offset)
@@ -24,11 +28,14 @@ const fetchPokemon = (limit, offset) => {
                           });
                           pokemonListDisplay(pokemonRequest);
                         });
+                        
                     };
 
+//Mostrar en la lista por HTML
                                                
 const pokemonListDisplay = (pkm) => {
-        const printPokelist = pkm.map(
+       const printPokelist = pkm
+        .map(
           pokelist =>  
         
             `
@@ -44,15 +51,39 @@ const pokemonListDisplay = (pkm) => {
  }
  
 
+ // Listado por pagina y botón de avanzar y retroceder
+
 cantidadPkms.addEventListener('change', () => {
-  const cantidad = cantidadPkms.value;
-  const offset = 0; 
-  fetchPokemon(cantidad, offset);
+  pkmsPerPages = cantidadPkms.value;
+  currentPage = 1; //reiniciamos la pagina actual
+  console.log("pkmsPerPages",pkmsPerPages)
+  fetchPokemon(pkmsPerPages);
+});
+
+const pageNext = document.getElementById('pageNext');
+pageNext.addEventListener('click', () => { console.log("currentPage",currentPage)
+  if ((currentPage * pkmsPerPages) < searchLimit) {
+    currentPage++;
+    const offset = (currentPage - 1) * pkmsPerPages; //Calculamos el indice del primer pokemon en la pagina actual con la resta, despues multiplicamos para mostrar cada pagina
+    console.log("offset",offset)
+    fetchPokemon(pkmsPerPages, offset);
+  }
 });
 
 
 
+const pagePrev = document.getElementById('pagePrev');
+pagePrev.addEventListener('click', () => {
+  if (currentPage > 1) { 
+    currentPage--;
+    const offset = (currentPage - 1) * pkmsPerPages;
+    fetchPokemon(pkmsPerPages, offset);
+  }
+});
 
+
+
+// Filtro de busqueda de pokemons
 
 searchPkm.addEventListener('submit', (event) => {
   event.preventDefault();
