@@ -37,13 +37,18 @@ body {
   justify-content: center;
 }
 
+.button-container {
+  text-align: center;
+}
+
 .load-more {
   margin: 0 auto;
   padding: .5rem 1rem;
-  display: block;
+ /* display: block; */
   border: 0;
   border-radius: 15px;
   cursor: pointer;
+  text-align: center;
 }
 
 
@@ -96,23 +101,6 @@ body {
   height: 20px;
 }
 
- /* @media (max-width: 993px) {
-  .card-container,
-  .card-container:nth-child(5n)  {
-    width: 160px;
-    margin-right: 10px;
-    margin-left: 10px;
-  }
-} 
-
-
-@media (max-width: 320px) {
-  .card-container,
-  .card-container:nth-child(5n) {
-    width: 80%;
-    margin-right: 0;
-  } 
-} */
 
 
 
@@ -129,7 +117,7 @@ body {
   
 }
 
-/* .search-container {
+ .search-container {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -142,5 +130,8 @@ body {
   border: 0;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-} */
+} 
+
+/* CSS FUSILADO 
+
 

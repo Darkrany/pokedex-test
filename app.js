@@ -39,7 +39,7 @@ const pokemonListDisplay = (pkm) => {
           pokelist =>  
         
             `
-            <a class="card-container" href="">
+            <a class="card-container" href=" ">
             <span class="poke-number">#${pokelist.id}</span>
             <img src="${pokelist.img}" alt="${pokelist.name}">
         
@@ -84,10 +84,12 @@ pagePrev.addEventListener('click', () => {
 
 
 // Filtro de busqueda de pokemons
-
 searchPkm.addEventListener('submit', (event) => {
   event.preventDefault();
   const searchInput = document.getElementById('search-input').value;
+  if (searchInput.length <= 0) {  // Si la cadena que viene procedente de la busqueda esta vacia no realiza una busqueda con el count total
+
+  }else {
   fetch(apiURL + `?limit=${searchLimit}`)
     .then(res => res.json())
     .then(data => {
@@ -105,7 +107,9 @@ searchPkm.addEventListener('submit', (event) => {
       pokemonListDisplay(filteredResults);
     })
     .catch(error => console.error(error));
+  }
 });
+
 
 
 fetchPokemon(cantidadPkms.value, 0);

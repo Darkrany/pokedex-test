@@ -10,24 +10,31 @@
 	</head>
 	
 	<body>
-		<img src="https://archives.bulbagarden.net/media/upload/4/4b/Pokédex_logo.png" class="logo">
+		<a href ="" ><img src="https://archives.bulbagarden.net/media/upload/4/4b/Pokédex_logo.png"  class="logo"></a>
 		<br />
+	<div class="search-container">
 		<form class="search-box" id="search-form">
 			<input type="search"  id="search-input" placeholder="Nombre de Pokémon"/>
 			<button type="submit">Buscar</button>
 		</form>
-
+	</div>
 		<section class="poke-list" id="pokedex"></section>
-				
+
+<div class="button-container">		
+<button id="pagePrev" class="load-more" >Anterior</button>
+<button id="pageNext" class="load-more">Siguiente</button>
+
 <select id="cantidad" name="cantidad" class="load-more">
-  <option value="20">20</option>	
-  <option value="50">50</option>
-  <option value="100">100</option>
-</select>
+	<option value="20">20</option>	
+	<option value="50">50</option>
+	<option value="100">100</option>
+  </select>
+</div>
 
 
-	<button id="pagePrev" class="load-more" >Anterior</button>
-	<button id="pageNext" class="load-more">Siguiente</button>
+
+	
+
 
 		<script src='app.js' />	
 	</body> 
