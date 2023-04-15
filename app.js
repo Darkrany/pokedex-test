@@ -16,12 +16,15 @@ const fetchPokemon = (limit, offset) => {
                          pokemonTotal = data.count;
                          searchLimit = pokemonTotal; // Asignamos el valor de pokemonTotal a la variable searchLimit
                          pokemonRequest = data.results.map((pokemons) => {
+                          
                         
                            // Utilizamos split() para obtener el número del Pokemon de la URL que es el ID
                               const pkmID = pokemons.url.split('/')[6];
+                              const pkmName = pokemons.name.charAt().toUpperCase() + pokemons.name.substring(1)
+                              //El nombre nos viene en minuscula le ponemos la primera en mayuscula
                               return {
                               id: pkmID,
-                              name: pokemons.name,
+                              name: pkmName,
                               url: pokemons.url,
                               img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+pkmID+".png"
                             };
@@ -39,11 +42,12 @@ const pokemonListDisplay = (pkm) => {
           pokelist =>  
         
             `
-            <a class="card-container" href=" ">
+            
+            <a class="card-container" href="details.html?id=${pokelist.id}">
             <span class="poke-number">#${pokelist.id}</span>
-            <img src="${pokelist.img}" alt="${pokelist.name}">
-        
-            <h2 class="poke-name">${pokelist.name}</h2>
+            <img class="poke-image" src="${pokelist.img}" alt="${pokelist.name}" id="${pokelist.id}">
+            <h2 class="poke-name" id="${pokelist.id}">${pokelist.name}</h2>
+         
             
             `
          ).join('');// Unir los elementos de la lista en una sola cadena de HTML
