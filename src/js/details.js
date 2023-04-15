@@ -10,7 +10,7 @@ const fetchPokemonDetails = () => {
   fetch(apiURL)
   .then((res) => res.json())
   .then((data) => {  
-    console.log(data)             
+               
     const pkmName = data.name.charAt().toUpperCase() + data.name.substring(1)
        pokemonDetailsRequest = {
         nombre: pkmName,
@@ -21,7 +21,7 @@ const fetchPokemonDetails = () => {
         height: data.height,
         weight: data.weight
        };
-       console.log(pokemonDetailsRequest)
+      
         pokemonDetailsDisplay(pokemonDetailsRequest);
   });
 };
@@ -89,7 +89,7 @@ const pokemonDetailsDisplay = (pkm) => {
     <strong>Tipo:</strong> ${pkm.type}<br/>
     <strong>Altura:</strong> ${pkm.height}''<br/>
     <strong>Peso:</strong> ${pkm.weight} lbs.<br/><br/>
-    <strong>X</strong><br/>
+    <strong></strong><br/>
 
   </div>
   <div id="blueButtons1">
