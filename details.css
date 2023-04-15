@@ -915,8 +915,8 @@
 
 	div#yellowBox1
 	{
-		width: 140px;
-		height: 70px;
+		width: 150px;
+		height: 80px;
 		z-index: 1;
 		background-color: #ffff00;
 
@@ -937,8 +937,8 @@
 
 	div#yellowBox2
 	{
-		width: 140px;
-		height: 70px;
+		width: 150px;
+		height: 80px;
 		z-index: 1;
 		background-color: #ffff00;
 

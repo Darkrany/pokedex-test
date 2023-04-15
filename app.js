@@ -60,7 +60,6 @@ const pokemonListDisplay = (pkm) => {
 cantidadPkms.addEventListener('change', () => {
   pkmsPerPages = cantidadPkms.value;
   currentPage = 1; //reiniciamos la pagina actual
-  console.log("pkmsPerPages",pkmsPerPages)
   fetchPokemon(pkmsPerPages);
 });
 
@@ -69,7 +68,7 @@ pageNext.addEventListener('click', () => { console.log("currentPage",currentPage
   if ((currentPage * pkmsPerPages) < searchLimit) {
     currentPage++;
     const offset = (currentPage - 1) * pkmsPerPages; //Calculamos el indice del primer pokemon en la pagina actual con la resta, despues multiplicamos para mostrar cada pagina
-    console.log("offset",offset)
+
     fetchPokemon(pkmsPerPages, offset);
   }
 });
