@@ -113,7 +113,13 @@ const pokemonDetailsDisplay = (pkm) => {
   <div id="yellowBox1">
   <br/>
   <strong>Estadisticas Base<br/>${pkm.stats}</strong></div>
-  <div id="yellowBox2"></div>
+  <div id="yellowBox2">
+  <br/>
+  <a href="https://www.pokemon.com/es/pokedex/${pkm.nombre}">
+  <strong>Más Info<br/></strong>
+  </div>
+    <br/>
+ 
   <div id="bg_curve1_right"></div>
   <div id="bg_curve2_right"></div>
   <div id="curve1_right"></div>
