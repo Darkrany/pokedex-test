@@ -1,11 +1,12 @@
 const pokedex = document.getElementById('pokedex'); /* recogemos los datos del html */
 const cantidadPkms = document.getElementById("cantidad");
-const searchPkm = document.getElementById('search-form');
+const searchPkm = document.getElementById('search-input');
 const apiURL = `https://pokeapi.co/api/v2/pokemon/`; 
 let pokemonRequest = []; //Almacenamos resultados del fetch
 let searchLimit = 0;
 let pkmsPerPages = cantidadPkms.value;
 let currentPage = 1;
+let waitingInput; //almacenaremos el tiempo de espera para la busqueda
 
  // Petición a API para obtener lista Pokemons
 
@@ -87,18 +88,17 @@ pagePrev.addEventListener('click', () => {
 
 
 // Filtro de busqueda de pokemons
-searchPkm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const searchInput = document.getElementById('search-input').value;
-  if (searchInput.length <= 0) {  // Si la cadena que viene procedente de la busqueda esta vacia no realiza una busqueda con el count total
 
-  }else {
-  fetch(apiURL + `?limit=${searchLimit}`)
+searchPkm.addEventListener('input', () => { //Se sustituye el listener del submit por el de la etiquet input
+  const pkmValue = searchPkm.value; 
+  console.log(pkmValue)
+  clearTimeout(waitingInput) // cancelamos el timeout almacenado para cuando vuelva a cargar la listener
+waitingInput = setTimeout(() => { //se usa metodo SetTimeout para espera del input
+  if (pkmValue.length <= 0) {  // si no recibimos valores lanzamos fetch con la cantidad de pkms por pagina
+    fetch(apiURL + `?limit=${pkmsPerPages}`)
     .then(res => res.json())
     .then(data => {
-      const filteredResults = data.results.filter(pokemon => 
-        pokemon.name.startsWith(searchInput)
-      ).map(pokemon => {
+      const allResults = data.results.map(pokemon => { //Hacemos map con todos los resultados para mandarlos a la funcion de mostrar
         const pkmID = pokemon.url.split('/')[6];
         return {
           id: pkmID,
@@ -107,10 +107,31 @@ searchPkm.addEventListener('submit', (event) => {
           img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+pkmID+".png"
         };
       });
-      pokemonListDisplay(filteredResults);
+      pokemonListDisplay(allResults);
     })
     .catch(error => console.error(error));
   }
+
+   else { // Si se escribe en el search-input empieza la busqueda en tiempo real
+    fetch(apiURL + `?limit=${searchLimit}`) //El valor del searthLimit es el total de pkms para poder realizar la busqueda en el global
+      .then(res => res.json())
+      .then(data => {
+        const filteredResults = data.results.filter(pokemon => 
+          pokemon.name.startsWith(pkmValue) //filtramos por el principio de los caracteres del nombre de cada pokemon
+        ).map(pokemon => {
+          const pkmID = pokemon.url.split('/')[6];
+          return {
+            id: pkmID,
+            name: pokemon.name,
+            url: pokemon.url,
+            img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+pkmID+".png"
+          };
+        });
+        pokemonListDisplay(filteredResults);
+      })
+      .catch(error => console.error(error));
+  }
+}, 1000 ) // Asignamos 1000 ms de espera para que reciba datos el input
 });
 
 
